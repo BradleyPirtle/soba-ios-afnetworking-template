@@ -10,6 +10,7 @@
 #import "SCDetailViewController.h"
 #import "SCPostCell.h"
 #import "SCBlogClient.h"
+#import "SCPost.h"
 
 @interface SCMasterViewController ()
 
@@ -27,18 +28,25 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
   
-  [[SCBlogClient sharedInstance] fetchPosts:YES success:^(NSURLSessionDataTask *task, id posts) {
-    [self.tableView reloadData];
-  } failure:^(NSURLSessionDataTask *task, NSError *error) {
-    NSLog(@"Failure to featch posts: %@", error);
-    // show the user
-  }];
+  [self refreshTable:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+
+- (IBAction)refreshTable:(id)sender
+{
+  [[SCBlogClient sharedInstance] fetchPosts:YES success:^(NSURLSessionDataTask *task, id posts) {
+    [self.tableView reloadData];
+  } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    NSLog(@"Failure to featch posts: %@", error);
+    // show the user
+  }];
 }
 
 #pragma mark - Table View
@@ -79,10 +87,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  
     if (editingStyle == UITableViewCellEditingStyleDelete) {
       [[SCBlogClient sharedInstance] deletePost:[[SCBlogClient sharedInstance] posts][indexPath.row]
-        success:^(NSURLSessionDataTask *task, NSDictionary *post) {
+        success:^(NSURLSessionDataTask *task, SCPost *post) {
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
       } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Failure to delete post: %@", error);
@@ -124,15 +131,18 @@
 
 - (void) newPostViewDidSave:(SCNewPostViewController*)aController
 {
-  NSDictionary *newPost = @{
+  // use the dictionary representation or the custom object
+  
+  NSDictionary *dictionary = @{
     @"title": aController.title,
     @"author": aController.author,
     @"body": aController.body
   };
+  SCPost *newPost = [SCPost postWithDictionary:dictionary];
   
   NSLog(@"did save %@", newPost);
   
-  [[SCBlogClient sharedInstance] createPost:newPost success:^(NSURLSessionDataTask *task, NSDictionary *post) {
+  [[SCBlogClient sharedInstance] createPost:newPost success:^(NSURLSessionDataTask *task, SCPost *post) {
     [self.navigationController popViewControllerAnimated:YES];
     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[[[SCBlogClient sharedInstance] posts] count]-1 inSection:0]]
         withRowAnimation:UITableViewRowAnimationAutomatic];

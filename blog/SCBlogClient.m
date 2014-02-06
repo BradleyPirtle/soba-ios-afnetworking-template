@@ -7,6 +7,10 @@
 //
 
 #import "SCBlogClient.h"
+#import "SCPostsResponseSerializer.h"
+#import "SCPostResponseSerializer.h"
+#import "SCPostRequestSerializer.h"
+#import "SCPost.h"
 
 static NSString * const SCBlogClientBaseURL = @"http://news.google.com";
 static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/api/";
@@ -54,6 +58,8 @@ static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/a
   if (!refresh) {
     success(nil, self.posts);
   } else {
+    self.responseSerializer = [SCPostsResponseSerializer serializer];
+    
     [self GET:@"posts" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
       self.posts = responseObject;
       success(task, responseObject);
@@ -63,13 +69,15 @@ static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/a
   }
 }
 
-- (void) createPost:(NSDictionary*)post
-  success:(void (^)(NSURLSessionDataTask *task, NSDictionary* post))success
+- (void) createPost:(SCPost*)post
+  success:(void (^)(NSURLSessionDataTask *task, SCPost* post))success
   failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
-  [self POST:@"posts" parameters:post success:^(NSURLSessionDataTask *task, NSDictionary *result) {
-    NSMutableDictionary *merged = [post mutableCopy];
-    [merged setValuesForKeysWithDictionary:result];
+  self.responseSerializer = [SCPostResponseSerializer serializer];
+  //self.requestSerializer = [SCPostRequestSerializer serializer];
+ 
+  [self POST:@"posts" parameters:[post dictionaryRepresentation] success:^(NSURLSessionDataTask *task, SCPost *result) {
+    SCPost *merged = [post mergeUpdate:result];
     [[self mutableArrayValueForKey:@"posts"] addObject:merged];
     success(task, [merged copy]);
   } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -77,12 +85,14 @@ static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/a
   }];
 }
 
-- (void) deletePost:(NSDictionary*)post
-  success:(void (^)(NSURLSessionDataTask *task, NSDictionary *post))success
+- (void) deletePost:(SCPost*)post
+  success:(void (^)(NSURLSessionDataTask *task, SCPost *post))success
   failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
-  
   NSString *path = [self pathForPost:post];
+  self.responseSerializer = [SCPostResponseSerializer serializer];
+  //self.requestSerializer = [SCPostRequestSerializer serializer];
+  
   [self DELETE:path parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
     [[self mutableArrayValueForKey:@"posts"] removeObject:post];
     success(task, responseObject);
@@ -91,9 +101,10 @@ static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/a
   }];
 }
 
-- (NSString*) pathForPost:(NSDictionary*)post
+- (NSString*) pathForPost:(SCPost*)post
 {
-  return [@"posts" stringByAppendingPathComponent:[post valueForKey:@"_id"]];
+  // must be _id or identifier depending on dictionary or custom object
+  return [@"posts" stringByAppendingPathComponent:[post valueForKey:@"identifier"]];
 }
 
 @end

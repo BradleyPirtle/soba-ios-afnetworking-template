@@ -71,6 +71,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Master" id="tQt-TN-PWz">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="vJQ-Wu-P74">
+                            <connections>
+                                <action selector="refreshTable:" destination="pGg-6v-bdr" id="vUD-NQ-zUk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="a5X-fM-v6j">
                             <connections>
                                 <segue destination="bxd-xA-D8E" kind="push" identifier="newPost" id="pM7-Wh-76x"/>
