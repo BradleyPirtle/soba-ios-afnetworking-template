@@ -9,7 +9,6 @@
 #import "SCBlogClient.h"
 #import "SCPostsResponseSerializer.h"
 #import "SCPostResponseSerializer.h"
-#import "SCPostRequestSerializer.h"
 #import "SCPost.h"
 
 static NSString * const SCBlogClientBaseURL = @"http://news.google.com";
@@ -74,8 +73,7 @@ static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/a
   failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
   self.responseSerializer = [SCPostResponseSerializer serializer];
-  //self.requestSerializer = [SCPostRequestSerializer serializer];
- 
+  
   [self POST:@"posts" parameters:[post dictionaryRepresentation] success:^(NSURLSessionDataTask *task, SCPost *result) {
     SCPost *merged = [post mergeUpdate:result];
     [[self mutableArrayValueForKey:@"posts"] addObject:merged];
@@ -91,7 +89,6 @@ static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/a
 {
   NSString *path = [self pathForPost:post];
   self.responseSerializer = [SCPostResponseSerializer serializer];
-  //self.requestSerializer = [SCPostRequestSerializer serializer];
   
   [self DELETE:path parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
     [[self mutableArrayValueForKey:@"posts"] removeObject:post];

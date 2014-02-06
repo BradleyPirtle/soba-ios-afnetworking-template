@@ -37,7 +37,6 @@
 		E3E6E7BA18A3F4F5007675AF /* SCNewPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E6E7B918A3F4F5007675AF /* SCNewPostViewController.m */; };
 		E3E6E7BD18A41DD1007675AF /* SCPostsResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E6E7BC18A41DD1007675AF /* SCPostsResponseSerializer.m */; };
 		E3E6E7C018A41E65007675AF /* SCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E6E7BF18A41E65007675AF /* SCPost.m */; };
-		E3E6E7C518A4213E007675AF /* SCPostRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E6E7C418A4213E007675AF /* SCPostRequestSerializer.m */; };
 		E3E6E7C818A421E7007675AF /* SCPostResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E6E7C718A421E7007675AF /* SCPostResponseSerializer.m */; };
 /* End PBXBuildFile section */
 
@@ -103,8 +102,6 @@
 		E3E6E7BC18A41DD1007675AF /* SCPostsResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostsResponseSerializer.m; sourceTree = "<group>"; };
 		E3E6E7BE18A41E65007675AF /* SCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPost.h; sourceTree = "<group>"; };
 		E3E6E7BF18A41E65007675AF /* SCPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPost.m; sourceTree = "<group>"; };
-		E3E6E7C318A4213E007675AF /* SCPostRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostRequestSerializer.h; sourceTree = "<group>"; };
-		E3E6E7C418A4213E007675AF /* SCPostRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostRequestSerializer.m; sourceTree = "<group>"; };
 		E3E6E7C618A421E7007675AF /* SCPostResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostResponseSerializer.h; sourceTree = "<group>"; };
 		E3E6E7C718A421E7007675AF /* SCPostResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostResponseSerializer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -259,8 +256,6 @@
 				E3E6E7BC18A41DD1007675AF /* SCPostsResponseSerializer.m */,
 				E3E6E7C618A421E7007675AF /* SCPostResponseSerializer.h */,
 				E3E6E7C718A421E7007675AF /* SCPostResponseSerializer.m */,
-				E3E6E7C318A4213E007675AF /* SCPostRequestSerializer.h */,
-				E3E6E7C418A4213E007675AF /* SCPostRequestSerializer.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -373,7 +368,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3E6E7C518A4213E007675AF /* SCPostRequestSerializer.m in Sources */,
 				E3A7196C18A3E01000C5A733 /* AFURLConnectionOperation.m in Sources */,
 				E3E6E7C818A421E7007675AF /* SCPostResponseSerializer.m in Sources */,
 				E3A7196718A3E01000C5A733 /* AFHTTPRequestOperation.m in Sources */,
