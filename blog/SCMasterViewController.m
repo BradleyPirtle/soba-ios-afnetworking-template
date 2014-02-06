@@ -9,7 +9,6 @@
 #import "SCMasterViewController.h"
 #import "SCDetailViewController.h"
 #import "SCPostCell.h"
-#import "SCBlogClient.h"
 
 @interface SCMasterViewController ()
 
@@ -26,7 +25,6 @@
 {
   [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,17 +42,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [[[SCBlogClient sharedInstance] posts] count];
+  return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   SCPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
-
-  NSDictionary *post = [[SCBlogClient sharedInstance] posts][indexPath.row];
   
-  cell.titleLabel.text = [post valueForKey:@"title"];
-  cell.authorLabel.text = [post valueForKey:@"author"];
+  cell.titleLabel.text = @"";
+  cell.authorLabel.text = @"";
   cell.previewView.image = [UIImage imageNamed:@"food.jpg"];
   
   return cell;
@@ -75,13 +71,7 @@
 {
   
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-      [[SCBlogClient sharedInstance] deletePost:[[SCBlogClient sharedInstance] posts][indexPath.row]
-        success:^(NSURLSessionDataTask *task, NSDictionary *post) {
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-      } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"Failure to delete post: %@", error);
-      }];
-      
+      [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
@@ -106,9 +96,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
+      /*
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = [[SCBlogClient sharedInstance] posts][indexPath.row];
+        id object = [[SCBlogClient sharedInstance] posts][indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
+      */
     } else if ([[segue identifier] isEqualToString:@"newPost"]) {
         [[segue destinationViewController] setDelegate:self];
     }
@@ -118,22 +110,6 @@
 
 - (void) newPostViewDidSave:(SCNewPostViewController*)aController
 {
-  NSDictionary *newPost = @{
-    @"title": aController.title,
-    @"author": aController.author,
-    @"body": aController.body
-  };
-  
-  NSLog(@"did save %@", newPost);
-  
-  [[SCBlogClient sharedInstance] createPost:newPost success:^(NSURLSessionDataTask *task, NSDictionary *post) {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[[[SCBlogClient sharedInstance] posts] count]-1 inSection:0]]
-        withRowAnimation:UITableViewRowAnimationAutomatic];
-  } failure:^(NSURLSessionDataTask *task, NSError *error) {
-    NSLog(@"Failure to create post: %@", error);
-    // show the user
-  }];
   
 }
 
