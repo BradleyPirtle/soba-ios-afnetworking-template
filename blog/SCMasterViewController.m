@@ -26,13 +26,7 @@
 {
   [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-  
-  [[SCBlogClient sharedInstance] fetchPosts:YES success:^(NSURLSessionDataTask *task, id posts) {
-    [self.tableView reloadData];
-  } failure:^(NSURLSessionDataTask *task, NSError *error) {
-    NSLog(@"Failure to featch posts: %@", error);
-    // show the user
-  }];
+
 }
 
 - (void)didReceiveMemoryWarning
