@@ -163,10 +163,9 @@
 				E3A7193018A3DF1000C5A733 /* SCDetailViewController.m */,
 				E3E6E7B818A3F4F5007675AF /* SCNewPostViewController.h */,
 				E3E6E7B918A3F4F5007675AF /* SCNewPostViewController.m */,
-				E3A7195118A3DFC800C5A733 /* SCBlogClient.h */,
-				E3A7195218A3DFC800C5A733 /* SCBlogClient.m */,
 				E3A7197118A3EF3C00C5A733 /* SCPostCell.h */,
 				E3A7197218A3EF3C00C5A733 /* SCPostCell.m */,
+				E3E6E7CB18A43390007675AF /* Networking */,
 				E3A7197018A3E01800C5A733 /* AFNetworking */,
 				E3A7197618A3EF7400C5A733 /* Images */,
 				E3A7193218A3DF1000C5A733 /* Images.xcassets */,
@@ -236,6 +235,15 @@
 				E3A7197418A3EF6D00C5A733 /* food.jpg */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		E3E6E7CB18A43390007675AF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E3A7195118A3DFC800C5A733 /* SCBlogClient.h */,
+				E3A7195218A3DFC800C5A733 /* SCBlogClient.m */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
