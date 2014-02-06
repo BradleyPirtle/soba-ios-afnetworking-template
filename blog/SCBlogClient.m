@@ -8,7 +8,7 @@
 
 #import "SCBlogClient.h"
 
-static NSString * const SCBlogClientBaseURL = @"http://news.google.com";
+static NSString * const SCBlogClientBaseURL = @"http://ec2-54-227-153-225.compute-1.amazonaws.com:3000/api/";
 static NSString * const SCBlogClientLocalhostBaseURL = @"http://localhost:3000/api/";
 
 @interface SCBlogClient ()
